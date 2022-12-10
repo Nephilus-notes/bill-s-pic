@@ -1,0 +1,40 @@
+{% extends './layout.html' %}
+
+{% block title %}Home{% endblock title%}
+
+{% block content %}
+<h1>Posts</h1>
+
+
+<form action="{{ url_for('blog.create_post') }}" method="POST">
+    <div class="mb-3">
+        <label for="inputTitle" class="form-label">Title:</label>
+        <input type="text" class="form-control" id="inputTitle" name="inputTitle">
+    </div>
+    <div class="mb-3">
+        <label for="inputBody" class="form-label">Body:</label>
+        <input type="text" class="form-control" id="inputBody" name="inputBody">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{# {{ posts | length }} getting the length of things in ninja #}
+
+{% for post in posts %}
+<div class="card">
+    <div class="card-body">
+    <h5 class="card-title"><a href="{{ url_for('blog.post_by_id', id= post.id) }}">{{post.title}}</h5></a>
+      <p><small>{{ post.date_created }}</small></p>
+        <p>{{ post.body }}
+        </p>
+    </div>
+    <div class="card-footer">
+        This post brought to you by: {{ post.user.username }}
+    </div>
+
+</div>
+
+
+{% endfor%}
+
+{% endblock content %}

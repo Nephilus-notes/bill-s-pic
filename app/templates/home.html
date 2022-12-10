@@ -1,0 +1,42 @@
+{% extends './layout.html' %}
+
+{% block title %}Home{% endblock title%}
+
+{% block content %}
+
+<h1>Home</h1>
+{% if user.is_authenticated %}
+<p>Welcome {{ user.username }}</p>
+{% for id, pokemon in pokemon.items() %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><a href="{{ url_for('main.pokemon_by_id', id=id) }}">{{ pokemon.name.title() }}</h5></a>
+                {% if pokemon.id < 650 %}
+                <td> <img class="pokedex_img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.id}}.svg"></td>
+                  {% else%}
+                    <img class="pokedex_img" src="{{ pokemon.reg_sprite }}", height="300">
+            {% endif %}
+            
+                <p><strong>Type</strong>: {{ pokemon.type1 }}</p>
+                {% if pokemon.type2 %}
+                <p><strong>Type 2</strong>: {{ pokemon.type2 }}</p>
+                {% endif %}
+                <p><strong>Ability</strong>: {{ pokemon.ability1 }}</p>
+             {% if pokemon.ability2 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability2 }}</p>
+             {% if pokemon.type3 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability3 }}</p>
+            {% endif %}
+            {% endif %}
+            </div>
+            <div class="card-footer">
+                Pokemon ID: {{ pokemon.id}}
+            </div>
+            
+            </div>
+{% endfor %}
+{% else %}
+<p>Please <a href="{{ url_for('auth.login') }}">Login</a></p>
+{% endif%}
+
+{% endblock content %}
