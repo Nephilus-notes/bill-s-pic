@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True)
     date_created = db.Column(db.DateTime, default =datetime.utcnow)
     password= db.Column(db.String(200))
-    # pokemon = back ref
+    pokemon = db.relationship('UserPokemon', backref="user")
 
     def hash_my_password(self, password):
         self.password = generate_password_hash(password)

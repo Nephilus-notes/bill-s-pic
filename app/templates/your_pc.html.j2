@@ -1,0 +1,55 @@
+{% extends './layout.html' %}
+
+{% block title %}Your PC{% endblock title%}
+
+{% block content %}
+
+
+
+<div class="content-top">
+    <div class="top-flex">
+        <a class="nav-link dropdown-toggle yellow-btn" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            User Info
+        </a>
+        <ul class="dropdown-menu user-dropdown" aria-labelledby="navbarDropdown">
+            <li class="dropdown-top-item">User Id: {{ user.id }}</li>
+            <li>Email: {{ user.email }}</li>
+        </ul>
+    </div>
+    <div class="top-h1 top-flex">
+        <h1>User: {{ user.username }}</h1>
+    </div>
+    <div class="top-flex">
+        <a class="btn yellow-btn" aria-current="log out" href="#">Search Pokemon</a>
+    </div>
+</div>
+<div class="card-flex">
+    {% for pokemon in user.pokemon %}
+
+    <div class="card pc-card">
+        <div class="pc-card-body card-body">
+            <div class="flex-left">
+                <h3>{{ pokemon.name.title() }}</h3>
+                <p><small> Pokemon ID: {{ pokemon.pokemon_id}} </small></p>
+                <div>
+                    <img class="your_pc_img" src="{{ pokemon.sprite }}" , height="100">
+                </div>
+            </div>
+            <div class="flex-right">
+                <p><strong>Type</strong>: {{ pokemon.type1 }}</p>
+                {% if pokemon.type2 %}
+                <p><strong>Type 2</strong>: {{ pokemon.type2 }}</p>
+                {% endif %}
+                <p><strong>Ability</strong>: {{ pokemon.ability }}</p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a class="btn small-btn" aria-current="check status"
+                href="{{ url_for('main.user_pokemon_by_id', id=pokemon.id) }}">Check Status</a>
+        </div>
+    </div>
+    {% endfor%}
+
+</div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends './layout.html' %}
+
+{% block title %}{{ pokemon.name.title() }}{% endblock title%}
+
+{% block content %}
+<div class="content-top">
+    <div class="top-flex">
+        <a class="nav-link dropdown-toggle yellow-btn" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            User Info
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>User Id: {{ user.id }}</li>
+            <li>Email: {{ user.email }}</li>
+        </ul>
+    </div>
+    <div class="top-h1 top-flex">
+        <h1>Pokemon</h1>
+    </div>
+    <div class="top-flex">
+        <a class="btn yellow-btn" aria-current="log out" href="#">Search Pokemon</a>
+    </div>
+</div>
+
+<div class="card-flex">
+    <div class="card pokemon_card">
+        <div class="card-body">
+            <h3 class="card-title">{{ pokemon.name.title() }}</h3>
+
+            {% if pokemon.pokemon_id < 650 %} <td> <img class="pokedex_img"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.pokemon_id}}.svg">
+                </td>
+                {% else%}
+                <img class="pokedex_img" src="{{ pokemon.sprite }}" , height="300">
+                {% endif %}
+
+                <p><strong>Type</strong>: {{ pokemon.type1 }}</p>
+                {% if pokemon.type2 %}
+                <p><strong>Type 2</strong>: {{ pokemon.type2 }}</p>
+                {% endif %}
+                <p><strong>Ability</strong>: {{ pokemon.ability }}</p>
+
+        </div>
+        <div class="card-footer">
+            Pokemon ID: {{ pokemon.id}}
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
