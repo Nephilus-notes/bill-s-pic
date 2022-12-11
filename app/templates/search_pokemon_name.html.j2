@@ -1,0 +1,74 @@
+{% extends './layout.html' %}
+
+{% block title %}Search{% endblock title%}
+
+
+{% block content %}
+<div class="content-top">
+    <div class="top-flex">
+    {% if pokemon %}
+       
+<a class="btn yellow-btn btn-form" href="{{ url_for('main.pokemon_by_id', id=pokemon.id) }}">
+Check Status</a>
+           
+           
+           {% else %}
+           {% endif %}
+        </form>
+    </div>
+    <div class="top-h1 top-flex">
+        <h1>Pokemon</h1>
+    </div>
+    <div class="top-flex">
+        <a class="btn yellow-btn" aria-current="log out" href="#">Search Pokemon</a>
+    </div>
+</div>
+
+<div class="card-flex">
+    <div class="flex-right">
+        <div class="mb-3 search-form">
+            <form action="{{ url_for('search.search_pokemon_name') }}" method="POST">
+
+                <label for="name" class="form-label"><strong>Pokemon Name:</strong></label>
+                <input type="text" class="form-control" id="name" name="name">
+                <button type="submit" class="btn small-btn search-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    {% if pokemon %}
+
+    <div class="card pokemon_card">
+        <div class="card-body">
+            <h3 class="card-title">{{ pokemon.name.title() }}</h3>
+
+            {% if pokemon.id < 650 %} <td> <img class="pokedex_img"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.id}}.svg">
+                </td>
+                {% else%}
+                <img class="pokedex_img" src="{{ pokemon.sprite }}" , height="300">
+                {% endif %}
+
+                 <p><strong>Type</strong>: {{ pokemon.type1 }}</p>
+                {% if pokemon.type2 %}
+                <p><strong>Type 2</strong>: {{ pokemon.type2 }}</p>
+                {% endif %}
+                <p><strong>Ability</strong>: {{ pokemon.ability1 }}</p>
+                {% if pokemon.ability2 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability2 }}</p>
+                {% if pokemon.ability3 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability3 }}</p>
+                {% endif %}
+                {% endif %}
+
+        </div>
+        <div class="card-footer">
+            Pokemon ID: {{ pokemon.id}}
+        </div>
+    </div>
+    {% else %}
+    {% endif %}
+</div>
+
+{% endblock content%}

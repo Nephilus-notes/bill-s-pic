@@ -1,23 +1,35 @@
 {% extends './layout.html' %}
 
-{% block title %}Login{% endblock title%}
+{% block title %}Search{% endblock title%}
 
 
 {% block content %}
-<h1>Login</h1>
+<div class="content-top">
+    <div class="top-flex">
+        {# <form action="{{ url_for('main.choose_pokemon') }}" method="POST">
+            <input type="hidden" value="{{ pokemon.id }}" name='pokemon'>
 
-<form action="{{ url_for('auth.login') }}" method="POST">
-    <input type="hidden" value="{{ request.args.get('next', '') }}" name = 'next'>
+            <button type="submit" class="btn yellow-btn btn-form" aria-current="choose pokemon">I Choose You!</button> #}
+        </form>
+    </div>
+    <div class="top-h1 top-flex">
+        <h1>Pokemon</h1>
+    </div>
+    <div class="top-flex">
+    <a class="btn yellow-btn" aria-current="log out" href="#">Search Pokemon</a>
+    </div>
+</div>
 
-    <div class="mb-3">
-        <label for="email" class="form-label">Email address:</label>
-        <input type="email" class="form-control" id="email" name="email">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else</div>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password:</label>
-        <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="card-flex search-form">
+    <a class="btn yellow-btn" aria-current="log out" 
+    href="{{ url_for('search.search_pokemon_id') }}">Search by ID</a>
+    <a class="btn yellow-btn" aria-current="log out" 
+    href="{{ url_for('search.search_pokemon_type') }}">Search by Type</a>
+    <a class="btn yellow-btn" aria-current="log out" 
+    href="{{ url_for('search.search_pokemon_name') }}">Search by Name</a>
+    <a class="btn yellow-btn" aria-current="log out" 
+    href="{{ url_for('search.search_pokemon_ability') }}">Search by Ability</a>
+
+</div>
+
 {% endblock content%}

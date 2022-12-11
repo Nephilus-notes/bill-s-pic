@@ -23,6 +23,8 @@ def create_app():
     app.register_blueprint(main_bp)
     from app.blueprints.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
+    from app.blueprints.search import bp as search_bp
+    app.register_blueprint(search_bp)
 
     # create files for each concern (init, routes, etc)
 

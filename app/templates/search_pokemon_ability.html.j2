@@ -1,0 +1,84 @@
+{% extends './layout.html' %}
+
+{% block title %}Search{% endblock title%}
+
+
+{% block content %}
+<div class="content-top">
+    <div class="top-flex">
+    {% if pokemon %}
+       {# Take out this check status button, replace with something that makes more sense #}
+<a class="btn yellow-btn btn-form" href="{{ url_for('main.pokemon_by_id', id=pokemon.id) }}">
+Check Status</a>
+           
+           
+           {% else %}
+           {% endif %}
+        </form>
+    </div>
+    <div class="top-h1 top-flex">
+        <h1>Pokemon</h1>
+    </div>
+    <div class="top-flex">
+        <a class="btn yellow-btn" aria-current="log out" href="#">Search Pokemon</a>
+    </div>
+</div>
+
+<div class="card-flex">
+    <div class="flex-right">
+        <div class="mb-3 search-form">
+            <form action="{{ url_for('search.search_pokemon_ability') }}" method="POST">
+{% if pokemon %}
+                <label for="ability" class="form-label" ><strong>Pokemon Ability:</strong></label>
+                <input type="text" class="form-control" id="ability" name="ability" placeholder="{{ pokemon_ability.title() }}">
+                {# <button type="submit" class="btn small-btn search-btn">Submit</button> #}
+                {% else %}
+                 <label for="ability" class="form-label" ><strong>Pokemon Ability:</strong></label>
+                <input type="text" class="form-control" id="ability" name="ability" placeholder="Ability">
+                {# <button type="submit" class="btn small-btn search-btn">Submit</button> #}
+                {% endif %}
+                <p class="top-h1"> Insert dashes if your ability has a space. (example: 'Flash fire' as 'flash-fire')</p>
+                <button type="submit" class="btn small-btn search-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="card-flex">
+
+    {% if pokemon %}
+    {% for pokemon in pokemon %}
+    <div class="card pc_card">
+        <div class="card-body">
+            <h3 class="card-title">{{ pokemon.name.title() }}</h3>
+
+            {# {% if pokemon.id < 650 %} <td> <img class="pokedex_img"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.id}}.svg">
+                </td>
+                {% else%} #}
+                <img class="pokedex_img" src="{{ pokemon.reg_sprite }}" , height="300">
+                {# {% endif %} #}
+
+                 <p><strong>Type</strong>: {{ pokemon.type1 }}</p>
+                {% if pokemon.type2 %}
+                <p><strong>Type 2</strong>: {{ pokemon.type2 }}</p>
+                {% endif %}
+                <p><strong>Ability</strong>: {{ pokemon.ability1 }}</p>
+                {% if pokemon.ability2 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability2 }}</p>
+                {% if pokemon.ability3 %}
+                <p><strong>Ability</strong>: {{ pokemon.ability3 }}</p>
+                {% endif %}
+                {% endif %}
+
+        </div>
+        <div class="card-footer">
+            Pokemon ID: {{ pokemon.id}}
+        </div>
+    </div>
+    {% else %}
+    <h2>Try Searching for a pokemon!</h2>
+    {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock content%}
