@@ -188,7 +188,7 @@ def create_move():
 #     db.session.commit()
 
 def create_pokemon_move_table():
-    for num in range(1, 901):
+    for num in range(1, 10):
         # api call
         response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{num}')
 
@@ -196,15 +196,16 @@ def create_pokemon_move_table():
         data = response.json()
 
 
-        for move_num in range(1, 749):
+        for move_num in range(1, 10):
             move = Move.query.get(move_num)
             for dct in data['moves']:
                 if move.name == dct['move']['name']:
-                    print(True)
                     print(move.name)
-                
-                pokemon_move = PokemonMove(pokemon_id = num, move_id=move_num)
-                db.session.add(pokemon_move)
+                    print(num, move_num)
+                    pokemon_move = PokemonMove(pokemon_id = num, move_id=move_num)
+                    db.session.add(pokemon_move)
+                    break
+
     db.session.commit()
 
 # from app.blueprints.main.models import create_pokemon_move_table

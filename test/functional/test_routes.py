@@ -19,7 +19,6 @@ def test_anonymous_home_page(app):
     with flask_app.test_client() as test_client:
         response = test_client.get('/')
         assert response.status_code == 200
-        assert b"this is the footer" in response.data
         assert b"Bill's PC" in response.data
         assert b"Home" in response.data
         assert b"Login" in response.data
