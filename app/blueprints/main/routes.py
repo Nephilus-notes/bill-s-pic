@@ -1,5 +1,5 @@
 from . import bp as app
-from app.blueprints.main.models import User, AllPokemon, UserPokemon
+from app.blueprints.main.models import User, AllPokemon, UserPokemon, Move
 from app import db, login_manager
 from flask import redirect, url_for, render_template, request, flash
 from flask_login import current_user
@@ -40,6 +40,33 @@ def choose_pokemon():
         ability_num = 1
     ability_str = 'ability' + str(ability_num)
     ability = getattr(pokemon, ability_str)
+    """
+    """
+    move_list = Move.query.filter_by(pokemon_id=pokemon_id)
+    move1 = move_list[0]
+    if len(move_list) == 2:
+        move2 = move_list[randint(1, len(move_list)-1)]
+        while move2 == move1:
+            move2 = move_list[randint(1, len(move_list)-1)]
+    elif len(move_list) == 3:
+        move2 = move_list[randint(1, len(move_list)-1)]
+        move3 = move_list[randint(1, len(move_list)-1)]
+        while move2 == move1:
+            move2 = move_list[randint(1, len(move_list)-1)]
+        while move3 == move1 or move3 == move2:
+            move3 = move_list[randint(1, len(move_list)-1)]
+    elif len(move_list) >= 4:
+        move2 = move_list[randint(1, len(move_list)-1)]
+        move3 = move_list[randint(1, len(move_list)-1)]
+        move4 = move_list[randint(1, len(move_list)-1)]
+        while move2 == move1:
+            move2 = move_list[randint(1, len(move_list)-1)]
+        while move3 == move1 or move3 == move2:
+            move3 = move_list[randint(1, len(move_list)-1)]
+        while move4 == move1 or move4 == move2 or move4 == move3:
+            move4 = move_list[randint(1, len(move_list)-1)]
+
+    """"""
     move1= 1
     shiny_chance = randint(1,100)
     if shiny_chance == 100:

@@ -56,7 +56,7 @@ class UserPokemon(db.Model):
     move3 = db.Column(db.Integer, db.ForeignKey('move.id'))
     move4 = db.Column(db.Integer, db.ForeignKey('move.id'))
     date_caught = db.Column(db.DateTime, default=datetime.utcnow)
-    owner = db.relationship('User', backref="user_pokemon")
+    owner = db.relationship('User', backref="user_pokemon", overlaps="pokemon,user")
 
 class PokemonMove(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -157,3 +157,54 @@ def create_move():
         else:
             db.session.commit()
 
+# def create_pokemon_move_table():
+#     for num in range(1, 901):
+#         # api call
+#         response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{num}')
+
+#         # making the data available to me in the function
+#         data = response.json()
+#         for move_num in range(1, 749):
+#             print(move_num)
+#             move = Move.query.get(move_num)
+#             if move.name in data['moves']:
+#                 pokemon_move = PokemonMove(pokemon_id = num, move_id=move_num)
+#                 db.session.add(pokemon_move)
+#     db.session.commit()
+
+# def create_pokemon_move_table_small():
+#     for num in range(1, 25):
+#         # api call
+#         response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{num}')
+
+#         # making the data available to me in the function
+#         data = response.json()
+#         for move_num in range(1, 749):
+#             print(move_num)
+#             move = Move.query.get(move_num)
+#             if move.name in data['moves']:
+#                 pokemon_move = PokemonMove(pokemon_id = num, move_id=move_num)
+#                 db.session.add(pokemon_move)
+#     db.session.commit()
+
+def create_pokemon_move_table():
+    for num in range(1, 901):
+        # api call
+        response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{num}')
+
+        # making the data available to me in the function
+        data = response.json()
+
+
+        for move_num in range(1, 749):
+            move = Move.query.get(move_num)
+            for dct in data['moves']:
+                if move.name == dct['move']['name']:
+                    print(True)
+                    print(move.name)
+                
+                pokemon_move = PokemonMove(pokemon_id = num, move_id=move_num)
+                db.session.add(pokemon_move)
+    db.session.commit()
+
+# from app.blueprints.main.models import create_pokemon_move_table
